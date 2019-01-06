@@ -49,7 +49,17 @@ const createBookmark = () => {
   howMany++;
 };
 
-// Event listeners
+//Function to delete a bookmark
+const deleteBookmark = (event) => {
+  let deleteButtons = document.querySelectorAll('.btn-danger');
+  for (let i = 0; i < deleteButtons.length; i++) {
+    if (event.target.id === deleteButtons[i].id) {
+      return tableBody.removeChild(tableBody.children[i]); //Only first child get's deleted CHECK THIS LATER!!!
+    }
+  }
+};
+
+// Submit button to add the bookmark
 submitBtn.addEventListener('click', (event) => {
   event.preventDefault();
   check();
@@ -62,5 +72,9 @@ submitBtn.addEventListener('click', (event) => {
     createBookmark();
     userInputW.value = "";
     userInputU.value = "";
+    let deleteBtn = document.querySelectorAll('.btn-danger');
+    deleteBtn.forEach(special => {
+      special.addEventListener('click', deleteBookmark);
+    });
   }
 });
