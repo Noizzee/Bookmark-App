@@ -8,6 +8,12 @@ const tableBody = document.querySelector('#url-list');
 let isInputLength //Boolean to check if something is entered
 let isValidURL //Boolean to check if user entered a valid URL
 let bookMarks = []; //Array to keep all the bookmarks
+//Integrating local storage
+localStorage.setItem('bookmark', JSON.stringify(bookMarks));
+const localData = JSON.parse(localStorage.getItem('bookmark'));
+localData.forEach(item => {
+  createBookmark(item);
+});
 let howMany = 0; //Keep track how many bookmarks are in the list
 
 //Checking of something is entered in the inputfields
@@ -45,7 +51,6 @@ const createBookmark = () => {
   tdElement.parentElement.appendChild(tdElement2);
   tdElement.parentElement.appendChild(tdElement3);
   tableBody.appendChild(trElement);
-  /* window.localStorage.setItem('bookmarks', JSON.stringify(bookMarks)); */ //Stores the array of bookmarks inside local storage
   howMany++;
 };
 
@@ -68,7 +73,8 @@ submitBtn.addEventListener('click', (event) => {
     bookMarks.push({
       Website: userInputW.value,
       URL: userInputU.value
-    });
+    }); //Push a new bookmark into the array
+    localStorage.setItem('bookmark', JSON.stringify(bookMarks)); //Push the new array inside localstorage
     createBookmark();
     userInputW.value = "";
     userInputU.value = "";
