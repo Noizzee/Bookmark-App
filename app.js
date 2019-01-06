@@ -7,13 +7,13 @@ const tableBody = document.querySelector('#url-list');
 //Custom Variables
 let isInputLength //Boolean to check if something is entered
 let isValidURL //Boolean to check if user entered a valid URL
-let bookMarks = []; //Array to keep all the bookmarks
+
 //Integrating local storage
+//Checks if there is a key in localstorage with the name bookmark, yes? getItem no? create empy array
+let bookMarks = localStorage.getItem('bookmark') ? JSON.parse(localStorage.getItem('bookmark')) : [];
 localStorage.setItem('bookmark', JSON.stringify(bookMarks));
-const localData = JSON.parse(localStorage.getItem('bookmark'));
-localData.forEach(item => {
-  createBookmark(item);
-});
+const localBook = JSON.parse(localStorage.getItem('bookmark'));
+
 let howMany = 0; //Keep track how many bookmarks are in the list
 
 //Checking of something is entered in the inputfields
@@ -36,14 +36,14 @@ const validURL = (string) => {
 };
 
 //Function to create all the elements and display them in the UI
-const createBookmark = () => {
+const createBookmark = (input, input2) => { //accepts 2 parameters
   let trElement = document.createElement('tr');
   let tdElement = document.createElement('td');
   let tdElement2 = document.createElement('td');
   let tdElement3 = document.createElement('td');
   let deleteBtn = document.createElement('button');
-  tdElement.appendChild(document.createTextNode(bookMarks[howMany].Website));
-  tdElement2.appendChild(document.createTextNode(bookMarks[howMany].URL));
+  tdElement.appendChild(document.createTextNode(input));
+  tdElement2.appendChild(document.createTextNode(input2));
   deleteBtn.appendChild(document.createTextNode("X"));
   deleteBtn.className = 'btn btn-danger btn-sm';
   tdElement3.appendChild(deleteBtn);
@@ -75,7 +75,7 @@ submitBtn.addEventListener('click', (event) => {
       URL: userInputU.value
     }); //Push a new bookmark into the array
     localStorage.setItem('bookmark', JSON.stringify(bookMarks)); //Push the new array inside localstorage
-    createBookmark();
+    createBookmark(userInputW.value, userInputU.value);
     userInputW.value = "";
     userInputU.value = "";
     let deleteBtn = document.querySelectorAll('.btn-danger');
@@ -83,4 +83,11 @@ submitBtn.addEventListener('click', (event) => {
       special.addEventListener('click', deleteBookmark);
     });
   }
+});
+
+//Retrieving the data from localstorage and storing it in the bookMarks array
+window.addEventListener('load', (event) => {
+  localBook.forEach(item => {
+    createBookmark(item);
+  });
 });
