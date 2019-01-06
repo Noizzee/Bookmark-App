@@ -45,18 +45,18 @@ const createBookmark = () => {
   tdElement.parentElement.appendChild(tdElement2);
   tdElement.parentElement.appendChild(tdElement3);
   tableBody.appendChild(trElement);
-  window.localStorage.setItem('bookmarks', JSON.stringify(bookMarks)); //Stores the array of bookmarks inside local storage
+  /* window.localStorage.setItem('bookmarks', JSON.stringify(bookMarks)); */ //Stores the array of bookmarks inside local storage
   howMany++;
 };
 
 //Function to delete a bookmark
 const deleteBookmark = (event) => {
   let deleteButtons = document.querySelectorAll('.btn-danger');
-  for (let i = 0; i < deleteButtons.length; i++) {
-    if (event.target.id === deleteButtons[i].id) {
-      return tableBody.removeChild(tableBody.children[i]); //Only first child get's deleted CHECK THIS LATER!!!
+  deleteButtons.forEach(e => {
+    if (event.target === e) { //e = the clicked button element
+      tableBody.removeChild(e.parentElement.parentElement); //is the tr element, after the button you have td first and then tr
     }
-  }
+  });
 };
 
 // Submit button to add the bookmark
