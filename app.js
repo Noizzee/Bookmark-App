@@ -3,6 +3,7 @@ let userInputW = document.querySelector('#website');
 let userInputU = document.querySelector('#url');
 const submitBtn = document.querySelector('#submitBtn');
 const tableBody = document.querySelector('#url-list');
+const searchBar = document.querySelector('#searchBox');
 
 //Custom Variables
 let isInputLength //Boolean to check if something is entered
@@ -12,7 +13,6 @@ let isValidURL //Boolean to check if user entered a valid URL
 //Checks if there is a key in localstorage with the name bookmark, yes? getItem no? create empy array
 let bookMarks = localStorage.getItem('bookmark') ? JSON.parse(localStorage.getItem('bookmark')) : [];
 localStorage.setItem('bookmark', JSON.stringify(bookMarks));
-const localBook = JSON.parse(localStorage.getItem('bookmark'));
 
 //Checking of something is entered in the inputfields
 const check = () => {
@@ -46,6 +46,7 @@ const createBookmark = (input, input2) => { //accepts 2 parameters
   linkBtn.setAttribute('target', '_blank');
   linkBtn.innerHTML = `<i class="fas fa-globe"></i>`;
   tdElement3.appendChild(linkBtn);
+  trElement.className = 'generateClass';
   tdElement.appendChild(document.createTextNode(input));
   tdElement2.appendChild(document.createTextNode(input2));
   deleteBtn.appendChild(document.createTextNode("X"));
@@ -81,6 +82,27 @@ const showAlert = (message) => {
   }, 2000); //Removes the alertDiv after 2s
 };
 
+//Search function //NOT FINISHED FIGURE OUT HERE!
+const filterList = () => {
+  let generateTR = document.querySelectorAll('.generateClass');
+  generateTR.forEach((e, index) => {
+    let td = e.querySelectorAll('td');
+    td.forEach(e2 => {
+      console.log('e', e);
+      let txtValue;
+      if (e2) {
+        txtValue = e2.textContent;
+        if (txtValue.toUpperCase().indexOf(searchBar.value.toUpperCase()) > -1) {
+          console.log(txtValue);
+        } else {
+          console.log(txtValue);
+        }
+      }
+    });
+  });
+  
+};
+
 // Submit button to add the bookmark
 submitBtn.addEventListener('click', (event) => {
   event.preventDefault();
@@ -104,9 +126,12 @@ submitBtn.addEventListener('click', (event) => {
   }
 });
 
+// Search function on keyup
+searchBar.addEventListener('keyup', filterList);
+
 // Running the createBookmark function for every item inside localstorage to display them back on the screen when reload
 window.addEventListener('load', (event) => {
-  localBook.forEach(item => {
+  bookMarks.forEach(item => {
     createBookmark(item.Website, item.URL);
   });
   let deleteBtn = document.querySelectorAll('.btn-danger'); //Adding eventlistener to all deleteBtn on load
