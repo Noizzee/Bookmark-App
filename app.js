@@ -40,6 +40,12 @@ const createBookmark = (input, input2) => { //accepts 2 parameters
   let tdElement2 = document.createElement('td');
   let tdElement3 = document.createElement('td');
   let deleteBtn = document.createElement('button');
+  let linkBtn = document.createElement('a');
+  linkBtn.className = 'btn btn-primary btn-sm';
+  linkBtn.setAttribute('href', `https://${input2}`);
+  linkBtn.setAttribute('target', '_blank');
+  linkBtn.innerHTML = `<i class="fas fa-globe"></i>`;
+  tdElement3.appendChild(linkBtn);
   tdElement.appendChild(document.createTextNode(input));
   tdElement2.appendChild(document.createTextNode(input2));
   deleteBtn.appendChild(document.createTextNode("X"));
