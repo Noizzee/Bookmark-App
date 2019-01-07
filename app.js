@@ -87,7 +87,7 @@ const filterList = () => {
   let generateTR = document.querySelectorAll('.generateClass');
   let tdElements;
   let txtValue;
-  generateTR.forEach((e, index) => {
+  generateTR.forEach((e) => {
     tdElements = e.querySelectorAll('td')[0];
     if (tdElements) {
       txtValue = tdElements.textContent;
