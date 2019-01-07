@@ -57,9 +57,11 @@ const createBookmark = (input, input2) => { //accepts 2 parameters
 //Function to delete a bookmark
 const deleteBookmark = (event) => {
   let deleteButtons = document.querySelectorAll('.btn-danger');
-  deleteButtons.forEach(e => {
+  deleteButtons.forEach((e, index) => {
     if (event.target === e) { //e = the clicked button element
       tableBody.removeChild(e.parentElement.parentElement); //is the tr element, after the button you have td first and then tr
+      bookMarks.splice(index, 1);
+      localStorage.setItem('bookmark', JSON.stringify(bookMarks));
     }
   });
 };
@@ -85,9 +87,9 @@ submitBtn.addEventListener('click', (event) => {
   }
 });
 
-//Retrieving the data from localstorage and storing it in the bookMarks array
+// Running the createBookmark function for every item inside localstorage to display them back on the screen when reload
 window.addEventListener('load', (event) => {
   localBook.forEach(item => {
-    createBookmark(item);
+    createBookmark(item.Website, item.URL);
   });
 });
