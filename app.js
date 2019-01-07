@@ -82,25 +82,22 @@ const showAlert = (message) => {
   }, 2000); //Removes the alertDiv after 2s
 };
 
-//Search function //NOT FINISHED FIGURE OUT HERE!
+//Search function
 const filterList = () => {
   let generateTR = document.querySelectorAll('.generateClass');
-  generateTR.forEach((e, index) => {
-    let td = e.querySelectorAll('td');
-    td.forEach(e2 => {
-      console.log('e', e);
-      let txtValue;
-      if (e2) {
-        txtValue = e2.textContent;
-        if (txtValue.toUpperCase().indexOf(searchBar.value.toUpperCase()) > -1) {
-          console.log(txtValue);
-        } else {
-          console.log(txtValue);
-        }
+  let tdElements;
+  let txtValue;
+  for (let i = 0; i < generateTR.length; i++) {
+    tdElements = generateTR[i].querySelectorAll('td')[0];
+    if (tdElements) {
+      txtValue = tdElements.textContent;
+      if (txtValue.toUpperCase().indexOf(searchBar.value.toUpperCase()) > -1) {
+        generateTR[i].style.display = "";
+      } else {
+        generateTR[i].style.display = "none";
       }
-    });
-  });
-  
+    }
+  }
 };
 
 // Submit button to add the bookmark
