@@ -87,17 +87,17 @@ const filterList = () => {
   let generateTR = document.querySelectorAll('.generateClass');
   let tdElements;
   let txtValue;
-  for (let i = 0; i < generateTR.length; i++) {
-    tdElements = generateTR[i].querySelectorAll('td')[0];
+  generateTR.forEach((e, index) => {
+    tdElements = e.querySelectorAll('td')[0];
     if (tdElements) {
       txtValue = tdElements.textContent;
       if (txtValue.toUpperCase().indexOf(searchBar.value.toUpperCase()) > -1) {
-        generateTR[i].style.display = "";
+        e.style.display = "";
       } else {
-        generateTR[i].style.display = "none";
+        e.style.display = "none";
       }
     }
-  }
+  });
 };
 
 // Submit button to add the bookmark
