@@ -8,6 +8,7 @@ class Bookmark {
 
 //UI: Handles everything UI related
 class UI {
+  //Create and add the bookmark to the ui
   static addBookmark(bookmark) {
     //Grab the tbody to add to it
     const list = document.querySelector('#url-list');
@@ -21,6 +22,13 @@ class UI {
     `;
     //Add the tr to the tbody
     list.appendChild(tr);
+  }
+
+  //Remove a bookmark from the ui
+  static deleteBookmark(element) {
+    if (element.classList.contains("btn-danger")) {
+      element.parentElement.parentElement.remove();
+    }
   }
 }
 
@@ -37,4 +45,10 @@ document.querySelector('#submitBtn').addEventListener('click', (e) => {
   const bookmark = new Bookmark(name, url);
   //Add the bookmark to the UI Method
   UI.addBookmark(bookmark);
+});
+
+//Delete Event
+document.querySelector('#url-list').addEventListener('click', (e) => {
+  //Call the deleteBookmark method and pass in the event target
+  UI.deleteBookmark(e.target);
 });
