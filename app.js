@@ -51,6 +51,17 @@ class Store {
     bookmarks.push(bookmark);
     localStorage.setItem('bookmark', JSON.stringify(bookmarks));
   }
+
+  //Delete item from local storage
+  static deleteItem (bookmark) {
+    const bookmarks = Store.getBookmarks();
+    bookmarks.forEach(e, index => {
+      if (e.name === bookmark) {
+        bookmarks.splice(index, 1);        
+      }
+    });
+    localStorage.setItem('bookmark', JSON.stringify(bookmarks));
+  }
 }
 
 //Event Submit
@@ -78,6 +89,4 @@ document.querySelector('#url-list').addEventListener('click', (e) => {
 });
 
 //onload event
-window.addEventListener('DOMContentLoaded', (e) => {
-  Store.getBookmarks();
-});
+window.addEventListener('DOMContentLoaded', Store.getBookmarks);
