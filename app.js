@@ -23,7 +23,7 @@ class UI {
     //Add the tr to the tbody
     list.appendChild(tr);
   }
-
+  
   //Remove a bookmark from the ui
   static deleteBookmark(element) {
     if (element.classList.contains("btn-danger")) {
@@ -33,22 +33,51 @@ class UI {
 }
 
 //Storage
+class Store {
+  //Init local storage method
+  static getBookmarks() {
+    let bookmarks
+    if (localStorage.getItem('bookmark') === null) {
+      bookmarks = [];
+    } else {
+      bookmarks = JSON.parse(localStorage.getItem('bookmark'));
+    }
+    return bookmarks;
+  }
+
+  //Add item to local storage
+  static addItem(bookmark) {
+    const bookmarks = Store.getBookmarks();
+    bookmarks.push(bookmark);
+    localStorage.setItem('bookmark', JSON.stringify(bookmarks));
+  }
+}
 
 //Event Submit
 document.querySelector('#submitBtn').addEventListener('click', (e) => {
   //Prevent default action
   e.preventDefault();
   //Get user input
-  const name = document.querySelector('#website').value;
-  const url = document.querySelector('#url').value;
+  const name = document.querySelector('#website');
+  const url = document.querySelector('#url');
   //Create the bookmark
-  const bookmark = new Bookmark(name, url);
+  const bookmark = new Bookmark(name.value, url.value);
   //Add the bookmark to the UI Method
   UI.addBookmark(bookmark);
+  //Clear inputfields after submit
+  name.value = "";
+  url.value = "";
+  //Store into local storage
+  Store.addItem(bookmark);
 });
 
 //Delete Event
 document.querySelector('#url-list').addEventListener('click', (e) => {
   //Call the deleteBookmark method and pass in the event target
   UI.deleteBookmark(e.target);
+});
+
+//onload event
+window.addEventListener('DOMContentLoaded', (e) => {
+  Store.getBookmarks();
 });
