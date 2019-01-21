@@ -18,7 +18,7 @@ class UI {
     tr.innerHTML = `
     <td>${bookmark.name}</td>
     <td>${bookmark.url}</td>
-    <td><a href="#" class="btn btn-danger btn-sm">X</a></td>
+    <td><a href="https://${bookmark.url}" target="_blank" class="btn btn-primary btn-sm"><i class="fas fa-globe"></i></a> <a href="#" class="btn btn-danger btn-sm">X</a></td>
     `;
     //Add the tr to the tbody
     list.appendChild(tr);
@@ -89,4 +89,10 @@ document.querySelector('#url-list').addEventListener('click', (e) => {
 });
 
 //onload event
-window.addEventListener('DOMContentLoaded', Store.getBookmarks);
+window.addEventListener('DOMContentLoaded', (e) => {
+  //Generate every item in localstorage to the UI
+  const bookmarks = Store.getBookmarks();
+  bookmarks.forEach(element => {
+    UI.addBookmark(element);
+  });
+});
